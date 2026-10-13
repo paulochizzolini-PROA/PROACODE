@@ -29,7 +29,7 @@ create table blocos ( id uuid primary key default gen_random_uuid(), codigo text
 create table base_versoes ( id uuid primary key default gen_random_uuid(), versao text unique not null, status text default 'rascunho', observacao text, criada_em timestamptz default now() );
 
 -- 6. Itens de controle (738 oficiais + complementares por cliente)
-create table itens ( id uuid primary key default gen_random_uuid(), bloco_id uuid not null references blocos(id), versao_id uuid not null references base_versoes(id), codigo text not null, item_numero int, titulo text not null, campo_por_que text, campo_o_que text, campo_como text, campo_criterios text, campo_problemas text, campo_como_solucionar text, tipo tipo_item default 'oficial', ativo boolean default true, unique (codigo, versao_id) );
+create table itens ( id uuid primary key default gen_random_uuid(), bloco_id uuid not null references blocos(id), versao_id uuid not null references base_versoes(id), codigo text not null, item_numero int, titulo text not null, por_que_faz text, o_que_faz text, como_faz text, criterios_analise text, problemas_identificados text, como_solucionar text, tipo tipo_item default 'oficial', ativo boolean default true, unique (codigo, versao_id) );
 
 -- 7. Avaliações (resposta por item, por cliente, por consultor)
 create table avaliacoes ( id uuid primary key default gen_random_uuid(), condominio_id uuid not null references condominios(id) on delete cascade, item_id uuid not null references itens(id), semaforo semaforo not null, nota_campo text, evidencia_texto text, avaliado_por uuid references usuarios(id), avaliado_em timestamptz default now(), sincronizado_em timestamptz, dispositivo text, unique (condominio_id, item_id) );
